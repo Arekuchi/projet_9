@@ -1,0 +1,62 @@
+version: '3'
+services:
+
+  patient-database:
+    image: mysql:8.0
+    container_name: patientdb
+#    volumes:
+#      - dbdata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=patient_db
+    ports:
+      - 3307:3306
+
+#
+#  notes-database:
+#    image: mongo
+#    container_name: note-database
+#    ports:
+#      - 27017:27017
+
+  patient:
+    image: patient_ms
+    depends_on:
+      - patient-database
+    container_name: patient
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://patientdb:3307/patient_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASROUCE_PASSWORD=root
+
+    ports:
+      - "8080:8080"
+
+
+#  notes:
+#   depends_on:
+#  - notes-database
+#    ports:
+#      - "8181:8181"
+#    restart: always
+#
+#  assessment:
+#    #    environment
+#    build:
+#      context: ./assessment
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8282:8282"
+#    restart: always
+
+#  mediscreen-angular:
+#    container_name: mediscreen-angular
+#    build: mediscreen-angular
+#    ports:
+#      - 4200:4200
+
+#
+#volumes:
+#  dbdata:
