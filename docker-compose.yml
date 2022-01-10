@@ -22,6 +22,12 @@ services:
   notesdb:
     image: mongo
     container_name: notedb
+    volumes:
+      - ./notes-database:/notes-database
+    command:
+      - /notes-database/import.sh
+    environment:
+      MONGO_INITDB_DATABASE: mediscreen
     ports:
       - 27017:27017
 
@@ -46,7 +52,7 @@ services:
     image: notes_ms
     networks:
       - web-server
-   depends_on:
+    depends_on:
       - notes-database
     container_name: notes_ms
     ports:
@@ -57,6 +63,7 @@ services:
 #    image: assessment_ms
 #    networks:
 #      - web-server
+#    container_name: assessment_ms
 #    ports:
 #      - "8282:8282"
 #    restart: always
