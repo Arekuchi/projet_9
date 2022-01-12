@@ -18,18 +18,23 @@ services:
       timeout: 20s
       retries: 10  
 
+  mongodb:
+    image: mongo
+    container_name: notesdb
+    ports:
+      - "27017:27017"
 
   notesdb:
     image: mongo
-    container_name: notedb
+#    networks:
+#      - web-server
+    container_name: notesdb_seed
     volumes:
       - ./notes-database:/notes-database
     command:
       - /notes-database/import.sh
-    environment:
-      MONGO_INITDB_DATABASE: mediscreen
-    ports:
-      - 27017:27017
+    links:
+      - mongodb
 
   patient_ms:
     image: patient_ms
@@ -47,13 +52,12 @@ services:
     ports:
       - "8080:8080"
 
-
   notes_ms:
     image: notes_ms
     networks:
       - web-server
     depends_on:
-      - notes-database
+      - notesdb
     container_name: notes_ms
     ports:
       - "8181:8181"
@@ -74,9 +78,6 @@ services:
 #    ports:
 #      - 4200:4200
 
-#
-#volumes:
-#  dbdata:
 ###########################
 #        NETWORK
 ###########################
