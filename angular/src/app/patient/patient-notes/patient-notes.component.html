@@ -1,0 +1,49 @@
+<ng-container *ngIf="patient">
+  <h1>Note du patient {{ patient.givenName }} {{ patient.familyName }}</h1>
+</ng-container>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="Note id">
+    <th mat-header-cell *matHeaderCellDef> Notes ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}}</td>
+  </ng-container>
+
+  <!-- patient id Column -->
+  <ng-container matColumnDef="Patient Id">
+    <th mat-header-cell *matHeaderCellDef> Patient ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.patientId}} </td>
+  </ng-container>
+
+  <!-- notes Column -->
+  <ng-container matColumnDef="Note content">
+    <th mat-header-cell *matHeaderCellDef> Note content </th>
+    <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+  </ng-container>
+
+  <!-- actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell  *matHeaderCellDef > Actions </th>
+    <td mat-cell *matCellDef="let row" >
+<!--      <button mat-icon-button (click)="onClickDisplay(row.id)" color="accent" aria-label="Example icon button with a menu icon">-->
+<!--        <mat-icon>visibility</mat-icon>-->
+<!--      </button>-->
+      <button mat-icon-button (click)="deletePatient(row.id)" color="accent" aria-label="Example icon button with a menu icon">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="onClickNotes(row.id)" color="accent" aria-label="Example icon button with a menu icon">
+        <mat-icon>description</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<div>
+  <button class="btn-back" (click)="goBack()">Retour à la liste des patients</button>
+  <button class="btn-back" (click)="onClickRedirect(patient.id)">Nouvelle note</button>
+</div>

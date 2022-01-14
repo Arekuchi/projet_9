@@ -20,14 +20,17 @@ services:
 
   mongodb:
     image: mongo
+    networks:
+      - web-server
+#    network_mode: host
     container_name: notesdb
     ports:
       - "27017:27017"
 
   notesdb:
     image: mongo
-#    networks:
-#      - web-server
+    networks:
+      - web-server
     container_name: notesdb_seed
     volumes:
       - ./notes-database:/notes-database
@@ -43,7 +46,7 @@ services:
     depends_on:
       - patientdb
 #        condition: service_healthy
-    container_name: patient_ms
+    container_name: patientms
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://patientdb:3306/patient_db
       - SPRING_DATASOURCE_USERNAME=root
@@ -58,25 +61,30 @@ services:
       - web-server
     depends_on:
       - notesdb
-    container_name: notes_ms
+    container_name: notesms
     ports:
       - "8181:8181"
 #    restart: always
 #
-#  assessment_ms:
-#    image: assessment_ms
-#    networks:
-#      - web-server
-#    container_name: assessment_ms
-#    ports:
-#      - "8282:8282"
+  assessment_ms:
+    image: assessment_ms
+    networks:
+      - web-server
+    container_name: assessmentms
+    depends_on:
+      - patientdb
+      - notesdb
+    ports:
+      - "8282:8282"
 #    restart: always
 
-#  mediscreen-angular:
-#    container_name: mediscreen-angular
-#    build: mediscreen-angular
-#    ports:
-#      - 4200:4200
+  angular:
+    image: angularms
+    networks:
+      - web-server
+    container_name: angular
+    ports:
+      - "80:80"
 
 ###########################
 #        NETWORK

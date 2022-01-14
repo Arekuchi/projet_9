@@ -1,0 +1,24 @@
+<h1>Ajouter une note</h1>
+
+
+<div>
+  <form [formGroup]="noteAddForm" (ngSubmit)="onSubmitForm()">
+
+    <div class="form-group">
+      <label for="patientId">Patient Id </label>
+      <input type="text" id="patientId" formControlName="patientId" placeholder="Selectionnez l'ID du patient">
+    </div>
+    <div class="form-group">
+      <label for="notes">Notes du patient </label>
+      <input type="text" id="notes" formControlName="notes" placeholder="Entrez une note">
+    </div>
+
+    <div>
+      <button class="add-patient" type="submit">Ajouter</button>
+    </div>
+  </form>
+</div>
+
+<div>
+  <button class="btn-back" (click)="goBack()">Retour</button>
+</div>
