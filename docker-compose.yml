@@ -76,7 +76,7 @@ services:
       - notesdb
     ports:
       - "8282:8282"
-#    restart: always
+    restart: always
 
   angular:
     image: angularms

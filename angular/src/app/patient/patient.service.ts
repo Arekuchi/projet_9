@@ -21,7 +21,7 @@ export class PatientService {
 
   // PATIENT
   getPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>("http://patientms:8080/patientList");
+    return this.http.get<Patient[]>("http://localhost:8080/patientList");
   }
 
   getPatient(id: number): Observable<Patient>{
