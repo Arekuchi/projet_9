@@ -14,7 +14,7 @@ export class PatientEditComponent implements OnInit {
 
   patient: Patient;
   patientForm: FormGroup= new FormGroup({
-    name: new FormControl('', Validators.minLength(2)),
+    givenname: new FormControl('', Validators.minLength(2)),
     lastname: new FormControl('', Validators.minLength(2)),
     birthdate: new FormControl('', Validators.minLength(2)),
     sex: new FormControl('', Validators.minLength(1)),

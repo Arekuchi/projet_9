@@ -82,7 +82,7 @@ services:
     image: angularms
     networks:
       - web-server
-    container_name: angular
+    container_name: angularms
     ports:
       - "80:80"
 

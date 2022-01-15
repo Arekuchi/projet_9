@@ -29,7 +29,7 @@ export class PatientService {
   }
 
   deletePatient(id: number): Observable<Patient>{
-    return this.http.delete<Patient>(`http://localhost:8080//patientDelete/${id}`);
+    return this.http.delete<Patient>(`http://localhost:8080/patientDelete/${id}`);
   }
 
   editPatient(id: number, params:any): Observable<any>{
